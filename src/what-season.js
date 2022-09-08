@@ -19,15 +19,24 @@ autumn = 8, 9, 10
 winter = 11, 0, 1
 */
 function getSeason(date) {
-  const month = date.getMonth();
-  if (month === 11 || month <= 1) {
-    return 'winter';
-  } else if (month > 1 && month <= 4) {
-    return 'spring';
-  } else if (month > 4 && month <= 7) {
-    return 'summer';
-  } else if (month > 7 && month <= 10) {
-    return 'autumn';
+  if (date === undefined) {
+    return 'Unable to determine the time of year!';
+  } else {
+    try {
+      const month = date.getMonth();
+      
+      if (month === 11 || month <= 1) {
+        return 'winter';
+      } else if (month > 1 && month <= 4) {
+        return 'spring';
+      } else if (month > 4 && month <= 7) {
+        return 'summer';
+      } else if (month > 7 && month <= 10) {
+        return 'autumn';
+      }
+    } catch {
+      throw new Error('Invalid date!');
+    }
   }
 }
 
