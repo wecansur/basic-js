@@ -24,7 +24,12 @@ function createDreamTeam(members) {
     }
     upperCaseMembersWithoutWhiteSpaces.push(name);
   })
-  
+  upperCaseMembersWithoutWhiteSpaces.sort();
+  let result = '';
+  upperCaseMembersWithoutWhiteSpaces.forEach((item) => {
+    result += item[0];
+  })
+  return result;
 }
 
 module.exports = {
