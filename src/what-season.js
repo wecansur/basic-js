@@ -23,8 +23,11 @@ function getSeason(date) {
     return 'Unable to determine the time of year!';
   } else {
     try {
-      const month = date.getMonth();
-      
+      const dateKeys = Object.keys(date);
+      if (dateKeys.length > 0) {
+        throw new Error('Invalid date!');
+      }
+      const month = date.getMonth(); 
       if (month === 11 || month <= 1) {
         return 'winter';
       } else if (month > 1 && month <= 4) {
