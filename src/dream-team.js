@@ -14,22 +14,28 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function createDreamTeam(members) {
-  const upperCaseMembersWithoutWhiteSpaces = [];
-  members.forEach((item) => {
-    let name = '';
-    for (let i = 0; i < item.length; i++) {
-      if(item[i] !== ' ') {
-        name += item[i].toUpperCase();
+  if(!Array.isArray(members)) {
+    return false;
+  } else {
+    const upperCaseMembersWithoutWhiteSpaces = [];
+    members.forEach((item) => {
+      let name = '';
+      if (typeof(item) === 'string') {
+        for (let i = 0; i < item.length; i++) {
+          if(item[i] !== ' ') {
+            name += item[i].toUpperCase();
+        }
       }
+      upperCaseMembersWithoutWhiteSpaces.push(name);
     }
-    upperCaseMembersWithoutWhiteSpaces.push(name);
-  })
-  upperCaseMembersWithoutWhiteSpaces.sort();
-  let result = '';
-  upperCaseMembersWithoutWhiteSpaces.forEach((item) => {
-    result += item[0];
-  })
-  return result;
+    })
+    upperCaseMembersWithoutWhiteSpaces.sort();
+    let result = '';
+    upperCaseMembersWithoutWhiteSpaces.forEach((item) => {
+      result += item[0];
+    })
+    return result;
+  } 
 }
 
 module.exports = {
