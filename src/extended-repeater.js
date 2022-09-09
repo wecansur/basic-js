@@ -18,7 +18,11 @@ const { NotImplementedError } = require('../extensions/index.js');
 function repeater(str, options) {
   let result = str;
   for (let i = 2; i <= options.repeatTimes; i++) {
-    result += `+${str}`;
+    if ('separator' in options) {
+      result+= `${options.separator}${str}`;
+    } else {
+      result += `+${str}`;
+    }
   }
   return result;
 }
