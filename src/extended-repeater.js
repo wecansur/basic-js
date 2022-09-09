@@ -16,42 +16,29 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function repeater(str, options) {
-  let result = '';
-  if ('addition' in options) {
-    result = `${str}${options.addition}`;
-  } else {
-    result = str;
+  const myOptions = {
+    rT: 1,
+    aRT: 1,
   }
-  for (let i = 2; i <= options.repeatTimes; i++) {
-    if ('separator' in options) {
-      if ('addition' in options) {
-        result+= `${options.separator}${str}${options.addition}`;
-        for (let j = 2; j <= options.additionRepeatTimes; j++) {
-          if ('additionSeparator' in options) {
-            result+= `${options.additionSeparator}${options.addition}`
-          } else {
-            result+= `|${options.addition}`
-          }
-        }
-      } else {
-        result+= `${options.separator}${str}`;
-      }
-    } else {
-      
-      if ('addition' in options) {
-        for (let j = 2; j <= options.additionRepeatTimes; j++) {
-          if ('additionSeparator' in options) {
-            result+= `${options.additionSeparator}${options.addition}`
-          } else {
-            result+= `|${options.addition}`
-          }
-        }
-      } else {
-        result += `+${str}`;
-      }
-    }
+  'separator' in options ? myOptions.sep = options.separator: myOptions.sep = '+';
+  'additionSeparator' in options ? myOptions.addSep = options.additionSeparator : myOptions.addSep = '|';
+  'addition' in options ? myOptions.add = options.addition: myOptions.add = '';
+  'repeatTimes' in options ? myOptions.rT = options.repeatTimes : myOptions.rT = 1;
+  'additionRepeatTimes' in options ? myOptions.aRT = options.additionRepeatTimes : myOptions.aRT = 1;
+  
+  let firstPart = `${str}${myOptions.add}`;
+  for (let i = 2; i <= myOptions.aRT; i++) {
+    firstPart += `${myOptions.addSep}${myOptions.add}`;
   }
-  return result;
+
+  const result = [];
+  result.push(firstPart)
+
+  let secondPart = `${myOptions.sep}${firstPart}`
+  for (let i = 2; i <= myOptions.rT; i++) {
+    result.push(secondPart)
+  }
+  return result.join('');
 }
 
 module.exports = {
