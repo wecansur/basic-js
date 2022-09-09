@@ -16,12 +16,39 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function repeater(str, options) {
-  let result = str;
+  let result = '';
+  if ('addition' in options) {
+    result = `${str}${options.addition}`;
+  } else {
+    result = str;
+  }
   for (let i = 2; i <= options.repeatTimes; i++) {
     if ('separator' in options) {
-      result+= `${options.separator}${str}`;
+      if ('addition' in options) {
+        result+= `${options.separator}${str}${options.addition}`;
+        for (let j = 2; j <= options.additionRepeatTimes; j++) {
+          if ('additionSeparator' in options) {
+            result+= `${options.additionSeparator}${options.addition}`
+          } else {
+            result+= `|${options.addition}`
+          }
+        }
+      } else {
+        result+= `${options.separator}${str}`;
+      }
     } else {
-      result += `+${str}`;
+      
+      if ('addition' in options) {
+        for (let j = 2; j <= options.additionRepeatTimes; j++) {
+          if ('additionSeparator' in options) {
+            result+= `${options.additionSeparator}${options.addition}`
+          } else {
+            result+= `|${options.addition}`
+          }
+        }
+      } else {
+        result += `+${str}`;
+      }
     }
   }
   return result;
